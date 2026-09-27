@@ -45,7 +45,6 @@ export default function Home() {
             <div className="floating-card card-two"><Database size={19}/><span>Reliable backend</span></div>
           </div>
         </div>
-        <div className="hero-scroll"><ArrowDownRight size={18}/> Scroll to explore</div>
       </section>
 
       <section className="stats-strip">
