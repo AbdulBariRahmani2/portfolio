@@ -20,6 +20,9 @@ export default function Home() {
             <div className="hero-meta">
               <span><Check size={15}/> {site.role}</span>
               <span><Check size={15}/> {site.location}</span>
+               <a href={`tel:${site.phone.replace(/\s/g, "")}`}>
+                <Check size={15}/> {site.phone}
+               </a>
             </div>
           </div>
 
