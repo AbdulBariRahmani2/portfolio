@@ -37,7 +37,7 @@ button { cursor: pointer; }
 .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 70px; }
 .eyebrow { margin: 0 0 13px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .14em; }
 .hero h1, .page-hero h1, .section-heading h2, .cta-inner h2, .footer h2 { font-family: Manrope, sans-serif; letter-spacing: -.055em; line-height: 1.05; }
-.hero h1 { max-width: 720px; margin: 0; font-size: clamp(46px, 6vw, 76px); }
+.hero h1 { max-width: 720px; margin: 0; font-size: clamp(36px, 4vw, 52px); }
 .hero-text { max-width: 650px; margin: 26px 0; color: var(--muted); font-size: 18px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 0 18px; border-radius: 13px; border: 1px solid transparent; font-weight: 700; font-size: 14px; transition: .2s ease; }
