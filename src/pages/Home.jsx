@@ -26,7 +26,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-visual">
+          {/* <div className="hero-visual">
             <div className="hero-card main-card">
               <div className="code-window">
                 <div className="window-dots"><i/><i/><i/></div>
@@ -46,7 +46,31 @@ export default function Home() {
             </div>
             <div className="floating-card card-one"><Code2 size={19}/><span>Clean code</span></div>
             <div className="floating-card card-two"><Database size={19}/><span>Reliable backend</span></div>
-          </div>
+          </div> */}
+          <div className="hero-visual">
+            <div className="hero-card main-card profile-image-card">
+              <img
+                src="/images/abdul-bari.jpg"
+                alt="Abdul Bari Rahmani"
+                className="hero-profile-image"
+              />
+
+           <div className="visual-caption">
+          <span>Available for meaningful work</span>
+          <span className="pulse-dot" />
+        </div>
+       </div>
+
+       <div className="floating-card card-one">
+       <Code2 size={19} />
+       <span>Clean code</span>
+       </div>
+
+        <div className="floating-card card-two">
+          <Database size={19} />
+         <span>Reliable backend</span>
+      </div>
+      </div>
         </div>
       </section>
 

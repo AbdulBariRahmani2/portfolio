@@ -36,16 +36,24 @@ export const stats = [
 ];
 
 export const technologies = [
-  { name: "Python", category: "Backend" },
-  { name: "Django", category: "Backend" },
-  { name: "React.js", category: "Frontend" },
-  { name: "JavaScript", category: "Frontend" },
-  { name: "Laravel", category: "Backend" },
-  { name: "HTML5", category: "Frontend" },
-  { name: "CSS3", category: "Frontend" },
-  { name: "REST APIs", category: "Backend" },
-  { name: "Git & GitHub", category: "Tools" },
-  { name: "SaaS", category: "Product" }
+  { name: "HTML5", category: "Frontend", icon: "html5", color: "#E34F26" },
+  { name: "CSS3", category: "Frontend", icon: "css3", color: "#1572B6" },
+  { name: "JavaScript", category: "Frontend", icon: "javascript", color: "#F7DF1E" },
+  { name: "React", category: "Frontend", icon: "react", color: "#61DAFB" },
+  { name: "Vite", category: "Tools", icon: "vite", color: "#646CFF" },
+  { name: "Git", category: "Tools", icon: "git", color: "#F05032" },
+  { name: "PHP", category: "Backend", icon: "php", color: "#777BB4" },
+  { name: "Laravel", category: "Backend", icon: "laravel", color: "#FF2D20" },
+  { name: "Django", category: "Backend", icon: "django", color: "#092E20" },
+  { name: "REST APIs", category: "Backend", icon: "rest-api", color: "#6BA539" },
+  { name: "Figma", category: "Design", icon: "figma", color: "#F24E1E" },
+  { name: "Photoshop", category: "Design", icon: "photoshop", color: "#31A8FF" },
+  { name: "Next.js", category: "Frontend", icon: "nextjs", color: "#000000" },
+  { name: "Tailwind", category: "Frontend", icon: "tailwind", color: "#06B6D4" },
+  { name: "Bootstrap", category: "Frontend", icon: "bootstrap", color: "#7952B3" },
+  { name: "MySQL", category: "Database", icon: "mysql", color: "#4479A1" },
+  { name: "WordPress", category: "CMS", icon: "wordpress", color: "#21759B" },
+  { name: "Shopify", category: "E-commerce", icon: "shopify", color: "#96BF48" }
 ];
 
 export const services = [
