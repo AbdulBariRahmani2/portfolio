@@ -10,7 +10,7 @@ export default function Home() {
       <section className="hero">
         <div className="container hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">SALAM 👋 — I'M {site.name.toUpperCase()}</p>
+            <p className="eyebrow">SALAM  — I'M {site.name.toUpperCase()}</p>
             <h1>{site.heroTitle}</h1>
             <p className="hero-text">{site.heroDescription}</p>
             <div className="hero-actions">
