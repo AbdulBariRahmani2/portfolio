@@ -522,6 +522,21 @@ button {
   transition: .2s;
 }
 
+/* Home technology section: centered brand logo above the label */
+.tech-card--logo {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  min-height: 132px;
+  padding: 20px 12px;
+  text-align: center;
+}
+
+.tech-card--logo strong {
+  margin-top: 12px;
+}
+
 .tech-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow);
@@ -540,14 +555,36 @@ button {
   margin-top: 3px;
 }
 
-.tech-icon {
-  width: 37px;
-  height: 37px;
+.tech-logo-wrap {
+  width: 54px;
+  height: 54px;
   display: grid;
   place-items: center;
-  border-radius: 11px;
-  background: #eaf3fb;
-  color: var(--blue);
+}
+
+.tech-logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform .2s ease;
+}
+
+.tech-card:hover .tech-logo {
+  transform: scale(1.08);
+}
+
+/* Next.js mark is black; invert it on the dark theme so it stays visible */
+html.dark .tech-logo--next {
+  filter: invert(1);
+}
+
+.tech-logo-fallback {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  opacity: .9;
 }
 
 /* =========================
@@ -1207,10 +1244,6 @@ html.dark .button-outline {
 html.dark .floating-card {
   background: rgba(13, 27, 42, .94);
   color: var(--ink);
-}
-
-html.dark .tech-icon {
-  background: rgba(47, 143, 229, .14);
 }
 
 html.dark .tag-row span {

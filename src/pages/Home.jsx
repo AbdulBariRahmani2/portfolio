@@ -1,8 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDownRight, ArrowUpRight, Check, Code2, Database, Layers3, Sparkles } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Check, Code2, Database, Sparkles } from "lucide-react";
 import { site, stats, technologies, services, projects, process } from "../data";
 import SectionTitle from "../components/SectionTitle";
+
+/*
+  Real technology logos.
+  Primary source: Devicon CDN (official multicolor brand SVGs).
+  Fallback source: Simple Icons CDN (brand-colored monochrome SVGs).
+  If both fail, TechLogo renders a colored text monogram instead of a
+  broken-image icon. Every URL below was verified to return HTTP 200.
+*/
+const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+const SIMPLE_ICONS = "https://cdn.simpleicons.org";
+
+const techLogos = {
+  HTML5: [`${DEVICON}/html5/html5-original.svg`, `${SIMPLE_ICONS}/html5/E34F26`],
+  CSS3: [`${DEVICON}/css3/css3-original.svg`, `${SIMPLE_ICONS}/css/1572B6`],
+  JavaScript: [`${DEVICON}/javascript/javascript-original.svg`, `${SIMPLE_ICONS}/javascript/F7DF1E`],
+  React: [`${DEVICON}/react/react-original.svg`, `${SIMPLE_ICONS}/react/61DAFB`],
+  Vite: ["https://cdn.jsdelivr.net/gh/vitejs/vite@v5.4.0/docs/public/logo.svg", `${DEVICON}/vite/vite-original.svg`],
+  Git: [`${DEVICON}/git/git-original.svg`, `${SIMPLE_ICONS}/git/F05032`],
+  PHP: [`${DEVICON}/php/php-original.svg`, `${SIMPLE_ICONS}/php/777BB4`],
+  Laravel: [`${DEVICON}/laravel/laravel-original.svg`, `${SIMPLE_ICONS}/laravel/FF2D20`],
+  // Django's official bottle green (#092E20) is invisible on a dark theme,
+  // so the Simple Icons CDN renders the same mark in a lightened brand green.
+  Django: [`${SIMPLE_ICONS}/django/24B880`, `${DEVICON}/django/django-plain.svg`],
+  "REST APIs": [`${DEVICON}/openapi/openapi-original.svg`, `${SIMPLE_ICONS}/openapiinitiative/6BA539`],
+  Figma: [`${DEVICON}/figma/figma-original.svg`, `${SIMPLE_ICONS}/figma/F24E1E`],
+  Photoshop: [`${DEVICON}/photoshop/photoshop-original.svg`, `${DEVICON}/photoshop/photoshop-plain.svg`],
+  // Next.js's official mark is a black circle; CSS inverts it in dark mode
+  // so it stays visible on both themes (see .tech-logo--next).
+  "Next.js": [`${DEVICON}/nextjs/nextjs-original.svg`, `${SIMPLE_ICONS}/nextdotjs/000000`],
+  Tailwind: [`${DEVICON}/tailwindcss/tailwindcss-original.svg`, `${SIMPLE_ICONS}/tailwindcss/06B6D4`],
+  Bootstrap: [`${DEVICON}/bootstrap/bootstrap-original.svg`, `${SIMPLE_ICONS}/bootstrap/7952B3`],
+  MySQL: [`${DEVICON}/mysql/mysql-original.svg`, `${SIMPLE_ICONS}/mysql/4479A1`],
+  WordPress: [`${DEVICON}/wordpress/wordpress-original.svg`, `${SIMPLE_ICONS}/wordpress/21759B`],
+  Shopify: [`${SIMPLE_ICONS}/shopify/96BF48`]
+};
+
+function TechLogo({ tech }) {
+  const sources = techLogos[tech.name] || [];
+  const [step, setStep] = useState(0);
+
+  if (step >= sources.length) {
+    return (
+      <span
+        className="tech-logo-fallback"
+        style={{ color: tech.color }}
+        aria-hidden="true"
+      >
+        {tech.name.replace(/[^A-Za-z]/g, "").slice(0, 2)}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      className={tech.name === "Next.js" ? "tech-logo tech-logo--next" : "tech-logo"}
+      src={sources[step]}
+      alt={`${tech.name} logo`}
+      width="46"
+      height="46"
+      loading="lazy"
+      onError={() => setStep((current) => current + 1)}
+    />
+  );
+}
 
 export default function Home() {
   return (
@@ -89,9 +153,12 @@ export default function Home() {
           />
           <div className="tech-grid">
             {technologies.map((tech) => (
-              <div className="tech-card" key={tech.name}>
-                <div className="tech-icon"><Layers3 size={20}/></div>
-                <div><strong>{tech.name}</strong><small>{tech.category}</small></div>
+              <div className="tech-card tech-card--logo" key={tech.name}>
+                <div className="tech-logo-wrap">
+                  <TechLogo tech={tech} />
+                </div>
+                <strong>{tech.name}</strong>
+                <small>{tech.category}</small>
               </div>
             ))}
           </div>
