@@ -1515,10 +1515,31 @@ body,
   overflow: hidden;
 }
 
-.hero-profile-image {
-  display: block;
+.hero-slideshow {
+  position: relative;
   width: 100%;
   height: 470px;
-  object-fit: cover;
   border-radius: 22px;
+  overflow: hidden;
+  background: #0d1727;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transition: none;
+  }
 }

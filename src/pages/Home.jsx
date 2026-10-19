@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDownRight, ArrowUpRight, Check, Code2, Database, Sparkles } from "lucide-react";
 import { site, stats, technologies, services, projects, process } from "../data";
@@ -38,6 +38,77 @@ const techLogos = {
   WordPress: [`${DEVICON}/wordpress/wordpress-original.svg`, `${SIMPLE_ICONS}/wordpress/21759B`],
   Shopify: [`${SIMPLE_ICONS}/shopify/96BF48`]
 };
+
+/*
+  Hero image slideshow: the five photos in public/images rotate every
+  3 seconds with a CSS opacity crossfade. Images are stacked in the DOM
+  (so they preload) and the timer is cleared on unmount. If a photo fails
+  to load it is skipped and the current photo stays visible.
+*/
+const heroImages = [
+  { src: "/images/abdul-bari.jpg", alt: "Abdul Bari Rahmani, full-stack web developer" },
+  { src: "/images/abdul-bari-1.png", alt: "Abdul Bari Rahmani working on a web project" },
+  { src: "/images/abdul-bari-2.png", alt: "Portrait of Abdul Bari Rahmani" },
+  { src: "/images/abdul-bari-3.jpg", alt: "Abdul Bari Rahmani at work" },
+  { src: "/images/abdul-bari-4.JPG", alt: "Abdul Bari Rahmani, React and Django developer" }
+];
+
+function HeroSlideshow() {
+  const [active, setActive] = useState(0);
+  const [failed, setFailed] = useState(() => new Set());
+
+  const working = useMemo(
+    () => heroImages.filter((image) => !failed.has(image.src)),
+    [failed]
+  );
+
+  useEffect(() => {
+    if (working.length < 2) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return undefined;
+    }
+    const timer = setInterval(() => {
+      setActive((current) => (current + 1) % heroImages.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [working.length]);
+
+  // First non-failed photo starting at the active index stays visible.
+  const shown = useMemo(() => {
+    for (let i = 0; i < heroImages.length; i += 1) {
+      const image = heroImages[(active + i) % heroImages.length];
+      if (!failed.has(image.src)) return image;
+    }
+    return null;
+  }, [active, failed]);
+
+  return (
+    <div className="hero-slideshow">
+      {heroImages.map((image, index) =>
+        failed.has(image.src) ? null : (
+          <img
+            key={image.src}
+            className={`hero-slide${shown === image ? " is-active" : ""}`}
+            src={image.src}
+            alt={shown === image ? image.alt : ""}
+            aria-hidden={shown !== image}
+            width="480"
+            height="470"
+            loading={index < 2 ? "eager" : "lazy"}
+            decoding="async"
+            onError={() =>
+              setFailed((current) => {
+                const next = new Set(current);
+                next.add(image.src);
+                return next;
+              })
+            }
+          />
+        )
+      )}
+    </div>
+  );
+}
 
 function TechLogo({ tech }) {
   const sources = techLogos[tech.name] || [];
@@ -92,11 +163,7 @@ export default function Home() {
 
           <div className="hero-visual">
             <div className="hero-card main-card profile-image-card">
-              <img
-                src="/images/abdul-bari.jpg"
-                alt="Abdul Bari Rahmani"
-                className="hero-profile-image"
-              />
+              <HeroSlideshow />
 
            <div className="visual-caption">
           <span>Available for meaningful work</span>
