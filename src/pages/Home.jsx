@@ -90,27 +90,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* <div className="hero-visual">
-            <div className="hero-card main-card">
-              <div className="code-window">
-                <div className="window-dots"><i/><i/><i/></div>
-                <div className="code-line"><span className="purple">const</span> developer = {"{"}</div>
-                <div className="code-line indent"><span className="cyan">name</span>: <span className="green">"{site.name}"</span>,</div>
-                <div className="code-line indent"><span className="cyan">focus</span>: <span className="green">"Full-Stack"</span>,</div>
-                <div className="code-line indent"><span className="cyan">stack</span>: [</div>
-                <div className="code-line double-indent"><span className="green">"React"</span>, <span className="green">"Django"</span>,</div>
-                <div className="code-line double-indent"><span className="green">"JavaScript"</span>, <span className="green">"Laravel"</span></div>
-                <div className="code-line indent">{"],"}</div>
-                <div className="code-line">{"}"};</div>
-              </div>
-              <div className="visual-caption">
-                <span>Available for meaningful work</span>
-                <span className="pulse-dot"/>
-              </div>
-            </div>
-            <div className="floating-card card-one"><Code2 size={19}/><span>Clean code</span></div>
-            <div className="floating-card card-two"><Database size={19}/><span>Reliable backend</span></div>
-          </div> */}
           <div className="hero-visual">
             <div className="hero-card main-card profile-image-card">
               <img
