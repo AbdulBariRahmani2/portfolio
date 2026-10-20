@@ -82,6 +82,7 @@ function HeroSlideshow() {
     return null;
   }, [active, failed]);
 
+  
   return (
     <div className="hero-slideshow">
       {heroImages.map((image, index) =>
