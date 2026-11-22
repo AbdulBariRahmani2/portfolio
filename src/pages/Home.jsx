@@ -46,11 +46,11 @@ const techLogos = {
   to load it is skipped and the current photo stays visible.
 */
 const heroImages = [
-  { src: "/images/abdul-bari.jpg", alt: "Abdul Bari Rahmani, full-stack web developer" },
-  { src: "/images/abdul-bari-1.png", alt: "Abdul Bari Rahmani working on a web project" },
-  { src: "/images/abdul-bari-2.png", alt: "Portrait of Abdul Bari Rahmani" },
-  { src: "/images/abdul-bari-3.jpg", alt: "Abdul Bari Rahmani at work" },
-  { src: "/images/abdul-bari-4.JPG", alt: "Abdul Bari Rahmani, React and Django developer" }
+  { src: "/images/abdul-bari-library.webp", alt: "Abdul Bari Rahmani, full-stack web developer" },
+  { src: "/images/abdul-bari-coding.webp", alt: "Abdul Bari Rahmani working on a web project" },
+  { src: "/images/abdul-bari-portfolio.webp", alt: "Portrait of Abdul Bari Rahmani" },
+  { src: "/images/abdul-bari-reading.webp", alt: "Abdul Bari Rahmani at work" },
+  { src: "/images/abdul-bari-speaking.webp", alt: "Abdul Bari Rahmani, React and Django developer" }
 ];
 
 function HeroSlideshow() {
@@ -194,9 +194,8 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <SectionTitle
-            eyebrow="TECHNOLOGY"
+            // eyebrow="TECHNOLOGY"
             title="Tools I use to turn ideas into products."
-            text="A focused public technology stack. You can edit this list later in src/data.js as your skills grow."
           />
           <div className="tech-grid">
             {technologies.map((tech) => (
@@ -231,7 +230,8 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <SectionTitle eyebrow="SELECTED WORK" title="Projects that show what I can do." text="Replace these starter entries with your real client, freelance, academic and personal projects as your portfolio grows." />
+          {/* eyebrow="SELECTED WORK" */}
+          <SectionTitle title="Projects that show what I can do." text="Replace these starter entries with your real client, freelance, academic and personal projects as your portfolio grows." />
           <div className="project-grid">
             {projects.map((project, i) => (
               <article className="project-card" key={project.title}>
@@ -254,7 +254,8 @@ export default function Home() {
 
       <section className="section process-section">
         <div className="container">
-          <SectionTitle eyebrow="PROCESS" title="A simple process. Clear communication." text="A professional workflow helps keep scope understandable and makes progress visible." />
+           {/* eyebrow="PROCESS" */}
+          <SectionTitle title="A simple process. Clear communication." text="A professional workflow helps keep scope understandable and makes progress visible." />
           <div className="process-grid">
             {process.map((item) => (
               <div className="process-item" key={item.step}>

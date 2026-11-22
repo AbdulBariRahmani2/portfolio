@@ -29,8 +29,8 @@ export const site = {
 };
 
 export const stats = [
-  { value: "01+", label: "Portfolio projects" },
-  { value: "04+", label: "Core technologies" },
+  { value: "10+", label: "Portfolio projects" },
+  { value: "05+", label: "Core technologies" },
   { value: "100%", label: "Learning & improvement" },
   { value: "24/7", label: "Passion for building" }
 ];
