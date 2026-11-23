@@ -5,11 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#08111f" />
     <meta name="description" content="Abdul Bari Rahmani — Full-Stack Developer specializing in Django, React.js, JavaScript, Laravel and SaaS applications." />
+    <link rel="canonical" href="https://www.abdulbarirahmani.com/" />
     <link rel="sitemap" href="/sitemap.xml" />
+
+    <!-- Fonts are self-hosted; preload the two latin files the page needs first -->
+    <link rel="preload" href="/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- First hero photo (LCP element on wide screens); keep in sync with
+         heroImages[0] in src/pages/Home.jsx -->
+    <link
+      rel="preload"
+      as="image"
+      imagesrcset="/images/abdul-bari-library-700.webp 700w, /images/abdul-bari-library-1000.webp 1000w"
+      imagesizes="(max-width: 720px) calc(100vw - 56px), 482px"
+      fetchpriority="high"
+    />
+
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Abdul Bari Rahmani" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Abdul Bari Rahmani | Full-Stack Developer" />
+    <meta property="og:description" content="Full-Stack Developer specializing in Django, React.js, JavaScript, Laravel and SaaS applications." />
+    <meta property="og:url" content="https://www.abdulbarirahmani.com/" />
+    <meta property="og:image" content="https://www.abdulbarirahmani.com/images/abdul-bari-og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Abdul Bari Rahmani, full-stack web developer, working on a web project" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Abdul Bari Rahmani | Full-Stack Developer" />
+    <meta name="twitter:description" content="Full-Stack Developer specializing in Django, React.js, JavaScript, Laravel and SaaS applications." />
+    <meta name="twitter:image" content="https://www.abdulbarirahmani.com/images/abdul-bari-og.jpg" />
+
     <title>Abdul Bari Rahmani | Full-Stack Developer</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://www.abdulbarirahmani.com/#person",
+            "name": "Abdul Bari Rahmani",
+            "url": "https://www.abdulbarirahmani.com/",
+            "image": "https://www.abdulbarirahmani.com/images/abdul-bari-og.jpg",
+            "jobTitle": "Full-Stack Web Developer",
+            "email": "mailto:gbari901817@gmail.com",
+            "telephone": "+93 700 609 192",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kabul",
+              "addressCountry": "AF"
+            },
+            "knowsAbout": ["Django", "React.js", "JavaScript", "Laravel", "REST APIs", "SaaS development"],
+            "sameAs": [
+              "https://github.com/AbdulBariRahmani2",
+              "https://www.linkedin.com/in/abdul-bari-rahmani-6883a6270/"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.abdulbarirahmani.com/#website",
+            "url": "https://www.abdulbarirahmani.com/",
+            "name": "Abdul Bari Rahmani",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://www.abdulbarirahmani.com/#person" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

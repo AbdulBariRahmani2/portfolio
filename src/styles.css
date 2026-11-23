@@ -1,14 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+/*
+  Self-hosted variable fonts (latin + latin-ext subsets).
+  Previously loaded with a CSS @import from fonts.googleapis.com, which added
+  two extra render-blocking round trips before the first paint. The woff2 files
+  are served from our own origin and preloaded in index.html.
+*/
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/dm-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/dm-sans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url('/fonts/manrope-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url('/fonts/manrope-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 :root {
   --bg: #f8fafc;
   --surface: #ffffff;
   --ink: #0f172a;
-  --muted: #64748b;
+  /* #5d6e84 keeps muted copy at 4.5:1+ on both the page background and the
+     light blue "soft" sections (WCAG 2.2 AA) */
+  --muted: #5d6e84;
   --line: #e2e8f0;
 
   --navy: #07111f;
   --blue: #0d66c2;
+  /* Filled buttons / badges: dark enough for white text in both themes */
+  --blue-strong: #0d66c2;
   --blue-light: #5da2d4;
   --orange: #f58220;
 
@@ -33,6 +78,7 @@ html.dark {
   --navy: #050b14;
 
   --blue: #2f8fe5;
+  --blue-strong: #1a6fb5;
   --blue-light: #6cb6e8;
   --orange: #ff9a3d;
 
@@ -77,6 +123,12 @@ button {
   cursor: pointer;
 }
 
+/* Consistent, always-visible keyboard focus ring */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
 .container {
   width: min(1160px, calc(100% - 40px));
   margin-inline: auto;
@@ -118,7 +170,7 @@ button {
   display: grid;
   place-items: center;
   border-radius: 12px;
-  background: var(--blue);
+  background: var(--blue-strong);
   color: white;
   font-size: 13px;
 }
@@ -144,7 +196,7 @@ button {
 }
 
 .nav-links .nav-cta {
-  background: var(--blue);
+  background: var(--blue-strong);
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -275,7 +327,7 @@ button {
 }
 
 .button-primary {
-  background: var(--blue);
+  background: var(--blue-strong);
   color: white;
 }
 
@@ -1063,7 +1115,7 @@ html.dark .tech-logo--next {
   gap: 7px;
   padding: 10px 13px;
   border-radius: 11px;
-  background: var(--blue);
+  background: var(--blue-strong);
   color: white;
   font-size: 13px;
   font-weight: 700;
@@ -1211,6 +1263,16 @@ html.dark .nav-links a.active {
   background: rgba(255, 255, 255, .06);
 }
 
+/* The CTA is a filled button: its label must stay white, not the muted
+   nav-link colour (which would drop to 2.5:1 on the blue background). */
+html.dark .nav-links a.nav-cta {
+  color: #fff;
+}
+
+html.dark .nav-links a.nav-cta:hover {
+  color: #fff;
+}
+
 html.dark .brand {
   color: var(--ink);
 }
@@ -1272,7 +1334,7 @@ html.dark .contact-form select {
 
 html.dark .contact-form input::placeholder,
 html.dark .contact-form textarea::placeholder {
-  color: #64748b;
+  color: #7c8da3;
 }
 
 /* Theme button */

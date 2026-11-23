@@ -5,38 +5,36 @@ import { site, stats, technologies, services, projects, process } from "../data"
 import SectionTitle from "../components/SectionTitle";
 
 /*
-  Real technology logos.
-  Primary source: Devicon CDN (official multicolor brand SVGs).
-  Fallback source: Simple Icons CDN (brand-colored monochrome SVGs).
-  If both fail, TechLogo renders a colored text monogram instead of a
-  broken-image icon. Every URL below was verified to return HTTP 200.
+  Real technology logos, self-hosted in public/logos (official multicolor
+  brand SVGs from the Devicon / Simple Icons projects, previously hot-linked
+  from two external CDNs). Serving them from our own origin removes two
+  extra DNS/TLS handshakes and the dependency on a moving @latest CDN tag.
+  If a file is ever missing, TechLogo renders a colored text monogram instead
+  of a broken-image icon.
 */
-const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
-const SIMPLE_ICONS = "https://cdn.simpleicons.org";
-
 const techLogos = {
-  HTML5: [`${DEVICON}/html5/html5-original.svg`, `${SIMPLE_ICONS}/html5/E34F26`],
-  CSS3: [`${DEVICON}/css3/css3-original.svg`, `${SIMPLE_ICONS}/css/1572B6`],
-  JavaScript: [`${DEVICON}/javascript/javascript-original.svg`, `${SIMPLE_ICONS}/javascript/F7DF1E`],
-  React: [`${DEVICON}/react/react-original.svg`, `${SIMPLE_ICONS}/react/61DAFB`],
-  Vite: ["https://cdn.jsdelivr.net/gh/vitejs/vite@v5.4.0/docs/public/logo.svg", `${DEVICON}/vite/vite-original.svg`],
-  Git: [`${DEVICON}/git/git-original.svg`, `${SIMPLE_ICONS}/git/F05032`],
-  PHP: [`${DEVICON}/php/php-original.svg`, `${SIMPLE_ICONS}/php/777BB4`],
-  Laravel: [`${DEVICON}/laravel/laravel-original.svg`, `${SIMPLE_ICONS}/laravel/FF2D20`],
+  HTML5: ["/logos/html5.svg"],
+  CSS3: ["/logos/css3.svg"],
+  JavaScript: ["/logos/javascript.svg"],
+  React: ["/logos/react.svg"],
+  Vite: ["/logos/vite.svg"],
+  Git: ["/logos/git.svg"],
+  PHP: ["/logos/php.svg"],
+  Laravel: ["/logos/laravel.svg"],
   // Django's official bottle green (#092E20) is invisible on a dark theme,
-  // so the Simple Icons CDN renders the same mark in a lightened brand green.
-  Django: [`${SIMPLE_ICONS}/django/24B880`, `${DEVICON}/django/django-plain.svg`],
-  "REST APIs": [`${DEVICON}/openapi/openapi-original.svg`, `${SIMPLE_ICONS}/openapiinitiative/6BA539`],
-  Figma: [`${DEVICON}/figma/figma-original.svg`, `${SIMPLE_ICONS}/figma/F24E1E`],
-  Photoshop: [`${DEVICON}/photoshop/photoshop-original.svg`, `${DEVICON}/photoshop/photoshop-plain.svg`],
+  // so this variant uses the same mark in a lightened brand green.
+  Django: ["/logos/django.svg"],
+  "REST APIs": ["/logos/rest-api.svg"],
+  Figma: ["/logos/figma.svg"],
+  Photoshop: ["/logos/photoshop.svg"],
   // Next.js's official mark is a black circle; CSS inverts it in dark mode
   // so it stays visible on both themes (see .tech-logo--next).
-  "Next.js": [`${DEVICON}/nextjs/nextjs-original.svg`, `${SIMPLE_ICONS}/nextdotjs/000000`],
-  Tailwind: [`${DEVICON}/tailwindcss/tailwindcss-original.svg`, `${SIMPLE_ICONS}/tailwindcss/06B6D4`],
-  Bootstrap: [`${DEVICON}/bootstrap/bootstrap-original.svg`, `${SIMPLE_ICONS}/bootstrap/7952B3`],
-  MySQL: [`${DEVICON}/mysql/mysql-original.svg`, `${SIMPLE_ICONS}/mysql/4479A1`],
-  WordPress: [`${DEVICON}/wordpress/wordpress-original.svg`, `${SIMPLE_ICONS}/wordpress/21759B`],
-  Shopify: [`${SIMPLE_ICONS}/shopify/96BF48`]
+  "Next.js": ["/logos/nextjs.svg"],
+  Tailwind: ["/logos/tailwind.svg"],
+  Bootstrap: ["/logos/bootstrap.svg"],
+  MySQL: ["/logos/mysql.svg"],
+  WordPress: ["/logos/wordpress.svg"],
+  Shopify: ["/logos/shopify.svg"]
 };
 
 /*
@@ -44,7 +42,17 @@ const techLogos = {
   3 seconds with a CSS opacity crossfade. Images are stacked in the DOM
   (so they preload) and the timer is cleared on unmount. If a photo fails
   to load it is skipped and the current photo stays visible.
+
+  Each photo is shipped as 700w / 1000w WebP derivatives and offered through
+  srcset, so phones download the small file and high-density screens get the
+  larger one. The originals stay untouched in public/images.
 */
+const heroSizes = "(max-width: 720px) calc(100vw - 56px), 482px";
+
+function heroSrcSet(src) {
+  const base = src.replace(/\.webp$/, "");
+  return `${base}-700.webp 700w, ${base}-1000.webp 1000w`;
+}
 const heroImages = [
   { src: "/images/abdul-bari-library.webp", alt: "Abdul Bari Rahmani, full-stack web developer" },
   { src: "/images/abdul-bari-coding.webp", alt: "Abdul Bari Rahmani working on a web project" },
@@ -93,9 +101,12 @@ function HeroSlideshow() {
             src={image.src}
             alt={shown === image ? image.alt : ""}
             aria-hidden={shown !== image}
+            srcSet={heroSrcSet(image.src)}
+            sizes={heroSizes}
             width="480"
             height="470"
             loading={index < 2 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : undefined}
             decoding="async"
             onError={() =>
               setFailed((current) => {

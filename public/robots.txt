@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://abdulbarirahmani.com/sitemap.xml
+Sitemap: https://www.abdulbarirahmani.com/sitemap.xml

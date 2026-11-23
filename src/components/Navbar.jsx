@@ -12,11 +12,23 @@ const links = [
   ["/contact", "Contact"]
 ];
 
+/*
+  The site is prerendered at build time (scripts/prerender.mjs), so this
+  component must render on the server as well as in the browser:
+  - localStorage is only touched when window exists
+  - the theme icon/labels wait for `mounted`, so the server markup (light
+    theme) hydrates byte-for-byte and the stored theme is applied right
+    after, instead of causing a hydration mismatch for dark-mode visitors.
+*/
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
+    return typeof window !== "undefined" && localStorage.getItem("theme") === "dark";
   });
+  const isDark = mounted && darkMode;
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
@@ -44,11 +56,13 @@ export default function Navbar() {
           className="menu-button"
           onClick={() => setOpen((current) => !current)}
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="primary-navigation"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
 
-        <nav className={`nav-links ${open ? "open" : ""}`}>
+        <nav id="primary-navigation" className={`nav-links ${open ? "open" : ""}`}>
 
           {links.map(([path, label]) => (
             <NavLink
@@ -68,17 +82,17 @@ export default function Navbar() {
             className="theme-toggle"
             onClick={toggleTheme}
             aria-label={
-              darkMode
+              isDark
                 ? "Switch to light mode"
                 : "Switch to dark mode"
             }
             title={
-              darkMode
+              isDark
                 ? "Switch to light mode"
                 : "Switch to dark mode"
             }
           >
-            {darkMode ? (
+            {isDark ? (
               <Sun size={18} />
             ) : (
               <Moon size={18} />

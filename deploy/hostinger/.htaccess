@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------------
+# Hostinger (LiteSpeed/Apache) configuration for www.abdulbarirahmani.com
+#
+# The site is a static build: upload the contents of dist/ (including this
+# file) to public_html. Nothing here changes the HTML, CSS or JS – it only adds
+# HTTP response headers and redirects, which cannot be set from the frontend.
+#
+# This file is OPT-IN: it is not copied into dist/ automatically, because it
+# changes production behaviour (HSTS, a 301 redirect, CSP). Copy it next to the
+# built index.html when you are ready, then verify with:
+#   curl -sI https://www.abdulbarirahmani.com/ | grep -i content-security
+#
+# The Content-Security-Policy below was tested locally against the production
+# build (all routes, images, fonts, inline JSON-LD) with no violations.
+# Remove any line that does not match how the site is actually served.
+# ---------------------------------------------------------------------------
+
+# 1. One canonical host: send non-www to https://www.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^abdulbarirahmani\.com$ [NC]
+  RewriteRule ^(.*)$ https://www.abdulbarirahmani.com/$1 [R=301,L]
+</IfModule>
+
+# 2. Security headers
+<IfModule mod_headers.c>
+  # Mitigates XSS. 'unsafe-inline' for styles is required because React sets
+  # inline style attributes; scripts stay locked to same-origin files.
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; form-action 'self'; upgrade-insecure-requests"
+
+  # Clickjacking protection that also covers browsers ignoring X-Frame-Options
+  Header always set X-Frame-Options "DENY"
+
+  # HTTPS only. Add "; includeSubDomains" once every subdomain is HTTPS too.
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Isolate the browsing context and stop MIME sniffing
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Do not leak full URLs to third parties
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # The site uses none of these APIs
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# 3. Caching: hashed build output for a year, HTML always revalidated
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2|webp|jpg|jpeg|png|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(html|xml|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# 4. Compression (if not already enabled at the server level)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/xml text/plain
+</IfModule>

@@ -39,7 +39,7 @@ export default function Contact() {
             <label>Project type<select name="type" defaultValue=""><option value="" disabled>Select a project type</option><option>Business website</option><option>Web application</option><option>SaaS product</option><option>Website improvement</option><option>Other</option></select></label>
             <label>Tell me about your project<textarea required name="message" rows="7" placeholder="What do you want to build?"></textarea></label>
             <button className="button button-primary" type="submit">Send message <Send size={16}/></button>
-            {sent && <p className="form-note">Demo form submitted. Connect this form to your Django API or email service before launch.</p>}
+            {sent && <p className="form-note" role="status">Demo form submitted. Connect this form to your Django API or email service before launch.</p>}
           </form>
         </div>
       </section>
